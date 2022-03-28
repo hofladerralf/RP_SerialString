@@ -5,13 +5,14 @@
  * - with timeout, once, time settable
  * - without timeout, call function for resetting time
  * - call the trim-function to trim the string (see string.trim())
+ * - reserve() a among of bytes to avoid memmory fragmentation
  */
 
 #include "src/RP_SerialString.h"
 
 
 const uint32_t s_baud = 115200;             //serial baud
-String mystr = "Start";                     //empty input string
+String mystr;                               //empty input string
 
 RP_SerialString SerialStr;                  //serialStr object
 
@@ -20,7 +21,7 @@ void setup(){
   
   Serial.begin(s_baud);
   Serial.print("Software: RP_SerialString");
-  Serial.println(mystr);
+  mystr.reserve(96);
   
   SerialStr.settimeout(6000);               //set timeout in ms, default is 5000
   SerialStr.setdelim('\r');                 //set CR as delim, default is NL
